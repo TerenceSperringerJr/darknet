@@ -19,6 +19,9 @@ cfg/
 darknet
 .fuse*
 
+# Executables Directory #
+executables/*.weights
+
 # OS Generated #
 .DS_Store*
 ehthumbs.db
