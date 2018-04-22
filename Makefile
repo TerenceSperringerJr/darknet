@@ -1,3 +1,6 @@
+#use Windows stock shell
+SHELL=cmd
+
 GPU=0
 CUDNN=0
 OPENCV=0
@@ -22,7 +25,7 @@ OBJDIR=obj
 EXECDIR=executables
 CFGDIR=cfg
 DATADIR=data
-MINGWDIR=mingw64_dlls
+MINGWDIR=mingw_w64_dlls
 
 CC=gcc
 NVCC=nvcc 
@@ -77,7 +80,7 @@ DEPS = $(wildcard src/*.h) Makefile include/darknet.h
 #all: obj backup results $(SLIB) $(ALIB) $(EXEC)
 all: obj  results $(SLIB) $(ALIB) $(EXEC)
 	copy $(MINGWDIR)\* $(EXECDIR)
-	mkdir $(EXECDIR)\$(CFGDIR)
+	md $(EXECDIR)\$(CFGDIR)
 	copy $(CFGDIR)\* $(EXECDIR)\$(CFGDIR)
 	xcopy /e /q /y /i $(DATADIR) $(EXECDIR)\$(DATADIR)
 
@@ -97,19 +100,19 @@ $(OBJDIR)/%.o: %.cu $(DEPS)
 	$(NVCC) $(ARCH) $(COMMON) --compiler-options "$(CFLAGS)" -c $< -o $@
 
 obj:
-	mkdir $(OBJDIR)
+	md $(OBJDIR)
 backup:
-	mkdir backup
+	md backup
 results:
-	mkdir results
+	md results
 executables:
-	mkdir $(EXECDIR)
+	md $(EXECDIR)
 
 .PHONY: clean
 
 clean:
-	del /f /q $(OBJDIR)\*
 	del /f /q $(EXECDIR)\$(SLIB) $(EXECDIR)\$(ALIB) $(EXECDIR)\$(EXEC).exe $(EXECDIR)\*.dll
 	del /f /q $(EXECDIR)\COPYING $(EXECDIR)\DISCLAIMER $(EXECDIR)\DISCLAIMER.PD $(EXECDIR)\readme.txt
-	rmdir /s /q $(EXECDIR)\$(CFGDIR)
-	rmdir /s /q $(EXECDIR)\$(DATADIR)
+	if exist $(OBJDIR) rd /s /q $(OBJDIR)
+	if exist $(EXECDIR)\$(CFGDIR) rd /s /q $(EXECDIR)\$(CFGDIR)
+	if exist $(EXECDIR)\$(DATADIR) rd /s /q $(EXECDIR)\$(DATADIR)
