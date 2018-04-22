@@ -1,0 +1,7 @@
+The following dependencies should automagically be copied upon building:
+cfg\*
+data\*
+mingw64_dlls\* (particularly libwinpthread-1.dll)
+
+The following needs to be copied manually:
+(pretrained weights file such as yolov3.weights from https://pjreddie.com/media/files/yolov3.weights)

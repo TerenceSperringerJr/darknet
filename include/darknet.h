@@ -5,6 +5,10 @@
 #include <string.h>
 #include <pthread.h>
 
+/* my includes */
+#include <time.h>
+/**/
+
 #define SECRET_NUM -1234
 extern int gpu_index;
 
